@@ -1,0 +1,118 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+div.main {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    z-index: -1;
+}
+div.main > div.main-images, div.main-news {
+    width: 100%;
+    margin-top: 10px;
+    display: block;
+}
+div.main div.main-images {
+    height: 300px;
+    display: block;
+}
+div.main div.main-images div.main-images-slide {
+    height: 100%;
+    width: 60%;
+    float: left;
+}
+div.main div.main-images div.main-images-slide > img{
+    height: 100%;
+    width: 100%;
+}
+div.main div.main-images div.main-images-sale {
+    height: 100%;
+    width: 38%;
+    float: right;
+}
+div.main div.main-images div.main-images-sale > img {
+    height: 97px;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+div.main div.main-news {
+    background-color: white;
+}
+div.main div.main-news div.main-news-title, 
+div.main div.main-product div.main-product-title {
+    background-color:  #ff471a;
+    color: white;
+    font-size: 24px;
+    height: 50px;
+    padding: 10px;
+}
+div.main div.main-news div.main-news-item {
+    margin-top: 10px;
+    height: 200px;
+    width: 100%;
+}
+div.main div.main-news div.main-news-item div.main-news-item-image {
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+div.main div.main-news div.main-news-item div.main-news-item-image > img{
+    width: 100%;
+    height: 100%;
+}
+div.main div.main-news div.main-news-item div.main-news-item-contents {
+    width: 65%;
+    float: right;
+    height: 100%;
+}
+div.main div.main-news div.main-news-item div.main-news-item-contents > a{
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+div.main div.main-news div.main-news-item div.main-news-item-contents > p{
+    margin-top: 50px;
+    word-spacing: 2px;
+    line-height: 30px;
+}
+div.main div.main-product {
+    width: 100%;
+    margin-top: 10px;
+}
+div.main div.main-product-itemList {
+    width: 100%;
+    display: flex;
+    background-color: white;
+}
+
+div.main div.main-product-itemList-item {
+    width: 25%;
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+}
+div.main div.main-product-itemList-item-image > img {
+    width: 70%;
+    height: 200px;
+    margin: auto;
+}
+div.main div.main-product-itemList-item-content > h2 {
+    margin-bottom: 15px;
+}
+div.main div.main-product-itemList-item-content > h2 >a {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    display: inline-block;
+    margin: 0;
+}
