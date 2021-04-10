@@ -5,13 +5,24 @@
   require 'dbconnect.php';
   session_start();
 
-  if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) ) {
+  if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) 
+    && isset($_POST['full_name']) && isset($_POST['address']) && isset($_POST['phone'])) {
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-
+    $full_name = $_POST['full_name'];
+    $address = $_POST['address'];
+    $phone = $_POST['phone'];
+    
     if ($password !== $confirm_password) {
         echo "<script>alert('Mật khẩu xác nhận không khớp!!'); window.location= 'http://localhost/webbanhang/register.php'</script>";
+        exit();
+    }
+
+    if (!preg_match('/^[0-9]{10,}/', $phone)) {
+        echo "<script>alert('Số điện thoại không đúng!!'); window.location= 'http://localhost/webbanhang/register.php'</script>";
+        exit();
     }
 
     $query = $conn->prepare("SELECT * FROM users WHERE username=?");
@@ -21,12 +32,14 @@
 
     if($result->num_rows == 1) {    
         echo "<script>alert('Tên người dùng đã tồn tại!!'); window.location= 'http://localhost/webbanhang/register.php'</script>";
+        exit();
     }
     else {
-        $query = $conn->prepare("INSERT INTO users(username, password) VALUES(?, ?)");
-        $query->bind_param("ss", $username, $password);
+        $query = $conn->prepare("INSERT INTO users(username, password, full_name, address, phone) VALUES(?, ?, ?, ?, ?)");
+        $password = md5($password);
+        $query->bind_param("sssss", $username, $password, $full_name, $address, $phone);
         $query->execute();
-        echo "<script>alert('Đăng ký thành công!!'); window.location= 'http://localhost/webbanhang/index.php'</script>";
+        echo "<script>alert('Đăng ký thành công!! Vui lòng đăng nhập nà!!'); window.location= 'http://localhost/webbanhang/login.php'</script>";
     }
   }
 ?>
@@ -65,6 +78,15 @@
                 </div>
                 <div class="form-group">
                     <input type="password" name="confirm_password" id="password" class="form-control input-lg" placeholder="Confirm Password">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="full_name" id="full_name" class="form-control input-lg" placeholder="Full name">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" id="address" class="form-control input-lg" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="phone" id="phone" class="form-control input-lg" placeholder="Phone">
                 </div>
         </div>
         <div class="row">

@@ -25,6 +25,7 @@
   session_start();
   header("Content-type: text/html;charset=UTF-8");
   include "header.php";
+  include "check_user.php";
   include "menu.php";
   include "dbconnect.php";
   ?>
@@ -192,12 +193,12 @@
   </div>
 
   </div>
-  <?php
-  //include "background.php";
-  include "footer.php";
-  ?>
-</body>
 
+</body>
+  <?php
+    //include "background.php";
+    include "footer.php";
+  ?>
 </html>
 <script src="https://kit.fontawesome.com/9077907ee5.js" crossorigin="anonymous"></script>
 <script src="js/slide.js"></script>

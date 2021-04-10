@@ -5,13 +5,17 @@
     </div>
 
     <?php
+    echo '<div class="header-login">';
     if (!isset($_SESSION['user'])) {
-        echo '<div class="header-login">';
         echo '   <a href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
         echo '   <a href="register.php"><i class="fas fa-user-plus"></i></a>';
-        echo '</div>';
+    }else {
+        echo '   <a href="cart.php"><i class="fas fa-cart-plus"></i></a>';
+        echo '   <a href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
     }
-    ?>
+    echo '</div>';
+        ?>
+    
     <div class="header-search">
         <i class="fas fa-search"></i>
         <form action="search.php">

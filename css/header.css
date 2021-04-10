@@ -62,6 +62,7 @@ div.header div.header-login {
     float: right;
     margin-right: 100px;
 }
+
 div.header div.header-login > a{
     width: 150px;
     font-size: 19px;
@@ -76,6 +77,6 @@ div.header div.header-login > a{
     transition: 0.2s;
     color: white;
 }
-div.header div.header-login > a:hover{ 
+div.header div.header-login a:hover{ 
     background-color: yellow;
 }

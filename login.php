@@ -9,14 +9,20 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = $conn->prepare("SELECT * FROM users WHERE username=? and password= ?");
-    $query->bind_param("ss", $username, $password);
+    $query = $conn->prepare("SELECT * FROM users WHERE username=?");
+    $query->bind_param("s", $username);
     $query->execute();
     $result = $query->get_result();
 
     if($result->num_rows == 1) {    
       while ($data = $result->fetch_assoc()) {
-          $_SESSION['user'] = $data['username'];
+          if ($data['password'] === md5($password)) {
+            $_SESSION['user'] = $data['username'];
+            setcookie("user", $data['username']);
+          }
+          else {
+            echo "<script>alert('Tài khoản hoặc mật khẩu không đúng !!');</script>";
+          }
       }
     }
 

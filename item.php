@@ -134,9 +134,11 @@
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $view = intval($row['product_view']);
+
             echo '
                 <div class="item-name">
-                <h1>' . $row['product_name'] . '</h1>
+                <h1>' . $row['product_name'] . ' - Lượt xem: '. $row['product_view']. '</h1>
                 <hr />
                 </div>
                 <div class="item-detail">
@@ -179,6 +181,12 @@
                         <input type="text" name="id" value="'.$row['product_id'].'" hidden/>
                         <label for="color" style="font-size: 20px;">Màu đã chọn: </label>
                         <input type="text" name="color" value="Red" style="border: none; outline: none; font-size: 16px;"/> <br>
+                        <br>
+                        <label for="quantity" style="font-size: 20px;">Số lượng: </label>
+                        <input type="number" id="quantity" value="1" name="quantity" min="1"
+                            style="width: 50px"    
+                        > 
+                        <br>
                         <button type="submit" class="btn btn-primary" style="
                             margin-top: 30px; 
                             padding: 15px;
@@ -196,6 +204,12 @@
                 </div>
                 </div>';
         }
+
+        $query = $conn->prepare("UPDATE products SET product_view=? where product_id=?");
+        $view += 1;
+        $query->bind_param("ii", $view, $id);
+        $query->execute();
+
     }else die('<script>alert("Không tìm thấy sản phẩm!!")</script>');
     ?>
 </body>

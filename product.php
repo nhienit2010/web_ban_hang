@@ -61,9 +61,42 @@
                 echo " Không tìm thấy loại sản phẩm!!";
                 break;
         }
+        echo '
+        <form method="GET" action="'.$_SERVER['REQUEST_URI'].'" style="float: right">
+            <label for="sort">Sắp xếp:</label>
+            <input name="category" value="'.explode("=",explode("&", $_SERVER['QUERY_STRING'])[0])[1].'" hidden/>
+            <select id="sort" name="sort" style="
+                background-color: #3d80f5;
+                position: relative;
+                font-family: Arial;
+                padding: 8px 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+                color:white;
+            ">
+                <option value="asc">Tăng dần</option>
+                <option value="des">Giảm dần</option>
+            </select>
+            <input type="submit" value="Tìm" style="
+                border: none; 
+                border-radius: 5px;
+                padding: 5px;
+            "/>
+        </form>';
         echo '    </div>';
 
-        $query = $conn->prepare("SELECT * FROM products WHERE product_type=?");
+        $query = '';
+
+        if (!isset($_GET['sort'])) {
+            $query = $conn->prepare("SELECT * FROM products WHERE product_type=?");
+        } else {
+            if ($_GET['sort'] === 'des') 
+                $query = $conn->prepare("SELECT * FROM products WHERE product_type=? order by product_price desc");
+            else 
+                $query = $conn->prepare("SELECT * FROM products WHERE product_type=? order by product_price asc");
+        }
+
         $query->bind_param("s", $category);
         $query->execute();
         $result = $query->get_result();
