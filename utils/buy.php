@@ -1,0 +1,3 @@
+<?php
+echo "Buy page";
+?>

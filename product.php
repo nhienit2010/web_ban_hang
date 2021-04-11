@@ -14,9 +14,12 @@
 </head>
 <style>
     body {
-        background-image: url("images/bg.jpg");
-        background-repeat: initial;
-        background-attachment: fixed;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    div.main div.main-product {
+        width: 100%;
+        min-height: 40em;
+        margin-top: 0.6em;
     }
 </style>
 
@@ -25,7 +28,7 @@
     session_start();
     include "header.php";
     include "menu.php";
-    include "dbconnect.php";
+    include "utils/dbconnect.php";
     ?>
     <div style="clear: both"></div>
     <?php
@@ -69,8 +72,8 @@
                 background-color: #3d80f5;
                 position: relative;
                 font-family: Arial;
-                padding: 8px 16px;
-                font-size: 16px;
+                padding: 0.4em 0.9em;
+                font-size: 0.8em;
                 border: none;
                 cursor: pointer;
                 color:white;
@@ -80,8 +83,8 @@
             </select>
             <input type="submit" value="Tìm" style="
                 border: none; 
-                border-radius: 5px;
-                padding: 5px;
+                border-radius: 0.3em;
+                padding: 0.3em;
             "/>
         </form>';
         echo '    </div>';
@@ -114,10 +117,10 @@
                             <img src="' . $row['product_image'] . '" />
                         </div>
                         <div class="main-product-itemList-item-content">
-                            <h2><a href="item.php?id=' . $row['product_id'] . '">' . $row['product_name'] . ' </a></h2>
-                            <h3><b>Giá: ' . $row['product_price'] . '</b></h3>
-                            <p><b>Xuất xứ :</b> ' . $row['product_origin'] . '</p>
-                            <p><b>Mô tả :</b> ' . $row['product_description'] . '</p>
+                            <h2><a href="item.php?id=' . $row['product_id'] . '">' . htmlentities($row['product_name']) . ' </a></h2>
+                            <h3><b>Giá: ' . number_format(intval($row['product_price'])) . '</b></h3>
+                            <p><b>Xuất xứ :</b> ' . htmlentities($row['product_origin']) . '</p>
+                            <p><b>Mô tả :</b> ' . htmlentities($row['product_description']) . '</p>
                         </div>
                     </div>';
                 $count += 1;

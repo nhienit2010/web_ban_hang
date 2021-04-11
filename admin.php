@@ -1,10 +1,11 @@
 <?php
-require_once 'dbconnect.php';
-include "check_user.php";
+require_once 'utils/dbconnect.php';
+include "utils/check_user.php";
+session_start();
 
-if (isset($_SESSION['user']) && $_SESSION['user'] !== 'admin') {
-    echo "<script>alert('Có gì đó không đúng :)))')</script>";
-    header('Location: /webbanhang/logout.php');
+if ( !isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
+    echo "<script>alert('Chỉ admin mới có thể vào khu vực này!!'); window.location='/webbanhang/index.php';</script>";
+    exit();
 }
 
 if (isset($_GET['user_del'])) {
@@ -53,11 +54,11 @@ function getAccount() {
         while ($row = $result->fetch_assoc()) {
             $data = $data."
                     <tr>
-                    <td>{$row['username']}</td>
-                    <td>{$row['full_name']}</td>
-                    <td>{$row['address']}</td>
+                    <td>".htmlentities($row['username'])."</td>
+                    <td>".htmlentities($row['full_name'])."</td>
+                    <td>".htmlentities($row['address'])."</td>
                     <td>{$row['phone']}</td>
-                    <td> <a href='admin.php?user_del={$row['username']}'>Xoá </a>
+                    <td> <a href='admin.php?user_del=".htmlentities($row['username'])."'>Xoá </a>
                     </tr>
                     </tbody>
                     ";
@@ -99,9 +100,9 @@ function getProduct() {
             $data = $data."
                     <tr>
                     <td>{$row['product_id']}</td>
-                    <td>{$row['product_price']}</td>
-                    <td>{$row['product_name']}</td>
-                    <td>{$row['product_origin']}</td>
+                    <td>".htmlentities($row['product_price'])."</td>
+                    <td>".htmlentities($row['product_name'])."</td>
+                    <td>".htmlentities($row['product_origin'])."</td>
                     <td> <a href='admin.php?product_del={$row['product_id']}'>Xoá </a>
                     </tr>
                     </tbody>
@@ -134,8 +135,8 @@ function getView() {
             $data = $data."
                     <tr>
                     <td>{$row['product_id']}</td>
-                    <td>{$row['product_origin']}</td>
-                    <td>{$row['product_name']}</td>
+                    <td>".htmlentities($row['product_origin'])."</td>
+                    <td>".htmlentities($row['product_name'])."</td>
                     <td>{$row['product_view']}</td>
                     </tr>
                     </tbody>
@@ -162,14 +163,12 @@ function getView() {
     <link rel="stylesheet" href="css/footer.css" />
 </head>
 <style>
-    body {
-        background-image: url("images/bg.jpg");
-        background-repeat: initial;
-        background-attachment: fixed;
+    body {    
+        background-color: #f0f0f0;
     }
 
     nav.menu a {
-        margin-left: 5em;
+        margin-left: 1em;
         width: 10em;
     }
 
@@ -178,15 +177,16 @@ function getView() {
         min-height: 35em;
         margin: auto;
         background-color: white;
-        margin-top: 50px;
+        margin-top: 2.8em;
     }
 
     div.admin-header {
         width: 100%;
-        background-color: #4e76f0;
-        color: white;
-        padding: 10px;
-        margin-bottom: 50px;
+        padding: 0.6em;
+        margin-bottom: 2.8em;
+        background-color:  white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: #333;
     }
 
     div.admin-list {
@@ -203,12 +203,12 @@ function getView() {
     table,
     th,
     td {
-        border: 2px solid black;
+        border: 0.1em solid black;
     }
 
     th,
     td {
-        padding: 15px;
+        padding: 0.8em;
     }
 
     tr>th:not(:nth-child(3)) {
@@ -222,7 +222,6 @@ function getView() {
 
 <body>
     <?php
-    session_start();
     header("Content-type: text/html;charset=UTF-8");
     include "header.php";
     include "menu_admin.php";
@@ -240,6 +239,9 @@ function getView() {
                 break;
             case 'product':
                 echo "<div class='admin-header'><h1>Quản lý sản phẩm</h1></div>";
+                break;
+            case 'view':
+                echo "<div class='admin-header'><h1>Lượt view sản phẩm</h1></div>";
                 break;
             default:
                 break;

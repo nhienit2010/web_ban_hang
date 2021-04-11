@@ -10,6 +10,8 @@
         echo '   <a href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
         echo '   <a href="register.php"><i class="fas fa-user-plus"></i></a>';
     }else {
+        if ($_SESSION['user'] === 'admin')
+            echo '   <a href="admin.php"><i class="fas fa-users-cog"></i></a>';
         echo '   <a href="cart.php"><i class="fas fa-cart-plus"></i></a>';
         echo '   <a href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
     }

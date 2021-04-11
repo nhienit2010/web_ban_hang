@@ -1,10 +1,11 @@
 <?php
-require_once 'dbconnect.php';
-include "check_user.php";
+require_once 'utils/dbconnect.php';
+include "utils/check_user.php";
+
+session_start();
 
 if (isset($_SESSION['user']) && $_SESSION['user'] !== 'admin') {
-    echo "<script>alert('Có gì đó không đúng :)))')</script>";
-    header('Location: /webbanhang/logout.php');
+    echo "<script>alert('Chỉ admin mới có thể vào khu vực này!'); window.location='/webbanhang/index.php';</script>";
 }
 
 function alert($message) {
@@ -84,9 +85,7 @@ if (
 </head>
 <style>
     body {
-        background-image: url("images/bg.jpg");
-        background-repeat: initial;
-        background-attachment: fixed;
+        background-color: rgba(255, 255, 255, 0.5);
     }
 
     nav.menu a {
@@ -104,10 +103,11 @@ if (
 
     div.add-product-header {
         width: 100%;
-        background-color: #4e76f0;
-        color: white;
         padding: 10px;
         margin-bottom: 50px;
+        background-color:  white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: #333;
     }
 
     div.add-product-form {
@@ -156,7 +156,6 @@ if (
 
 <body>
     <?php
-    session_start();
     header("Content-type: text/html;charset=UTF-8");
     include "header.php";
     include "menu_admin.php";

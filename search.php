@@ -1,3 +1,10 @@
+<?php 
+        session_start();
+        include "header.php"; 
+        include "menu.php";
+        include "utils/dbconnect.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,21 +16,18 @@
     <link rel="stylesheet" href="css/background.css" />
     <link rel="stylesheet" href="css/menu.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/footer.css" />
   </head>
   <style>
    body {
-    background-image: url("images/bg.jpg");
-    background-repeat:initial;
-    background-attachment: fixed;
+        background-color: rgba(255, 255, 255, 0.5);
+  }
+  div.main {
+      min-height: 32em;
   }
   </style>
   <body>
-    <?php 
-        session_start();
-        include "header.php"; 
-        include "menu.php";
-        include "dbconnect.php";
-    ?>
+
     <div style="clear: both"></div>
     <?php
         if (isset($_GET['search'])) {
@@ -52,10 +56,10 @@
                             <img src="'. $row['product_image'].'" />
                         </div>
                         <div class="main-product-itemList-item-content">
-                            <h2><a href="item.php?id='.$row['product_id'].'">'.$row['product_name'].' </a></h2>
-                            <b>Giá: '.$row['product_price'].'</b>
-                            <p><b>Xuất xứ :</b> '.$row['product_origin'].'</p>
-                            <p><b>Mô tả :</b> '.$row['product_description'].'</p>
+                            <h2><a href="item.php?id='.$row['product_id'].'">'.htmlentities($row['product_name']).' </a></h2>
+                            <b>Giá: '.number_format(intval($row['product_price'])).'</b>
+                            <p><b>Xuất xứ :</b> '.htmlentities($row['product_origin']).'</p>
+                            <p><b>Mô tả :</b> '.htmlentities($row['product_description']).'</p>
                         </div>
                     </div>';
                     $count += 1;

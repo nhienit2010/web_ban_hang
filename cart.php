@@ -1,7 +1,11 @@
 <?php
-require_once 'dbconnect.php';
-include "check_user.php";
+require_once 'utils/dbconnect.php';
+include "utils/check_user.php";
 
+if ( !isset($_SESSION['user']) && !isset($_COOKIE['user']) ) {
+    echo "<script>alert('Vui lòng đăng nhập!!!'); window.location='/webbanhang/login.php';</script>";
+    exit();
+}
 if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && isset($_POST['quantity'])) {
     $id = intval($_POST['id']);
     $color = $_POST['color'];
@@ -45,23 +49,22 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
 </head>
 <style>
     body {
-        background-image: url("images/bg.jpg");
-        background-repeat:initial;
-        background-attachment: fixed;
+        background-color: rgba(255, 255, 255, 0.5);
     }
     div.cart {
         width: 80%;
         min-height: 35em;
         margin: auto;
         background-color: white;
-        margin-top: 50px;
+        margin-top: 2.8em;
     }
     div.cart-header {
         width: 100%;
-        background-color: #4e76f0;
-        color: white;
-        padding: 10px;
-        margin-bottom: 50px;
+        padding: 0.6em;
+        margin-bottom: 2.8em;
+        background-color:  white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: #333;
     }
     div.cart-list {
         width: 80%;
@@ -71,16 +74,61 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
         border-collapse: collapse;
     }
     table, th, td {
-        border: 2px solid black;
+        border: 0.1em solid black;
     }
     th, td {
-        padding: 15px;
+        padding: 0.8em;
     }
     tr > th:first-child, tr > th:nth-child(3), tr > th:nth-child(4){
         width: 6em;
     }
     tr > th:nth-child(2) {
         width: 37em;
+    }
+    #buy_form {
+        background-color: white;
+        height: 30em;
+        width: 50em;
+        position: fixed;
+        display: none;
+        top: 10em;
+        left: 25em;
+        border: 0.10em solid rgba(0, 0, 0, 0.1);
+        box-shadow: -5px -2px 10px rgba(0, 0, 0, 0.1);
+        padding: 2em;
+        border-radius: 2em;
+        transition: 4s;
+    }
+
+    form {
+        width: 60%;
+        margin: auto;
+    }
+
+    div.form-group {
+        margin-bottom: 0.5em;
+    }
+
+    div.form-group>input {
+        margin-top: 1em;
+        padding: 0.5em;
+        width: 30em;
+        font-size: 0.8em;
+        border: 1.5px solid rgba(0, 0, 0, 0.5);
+        border-radius: 0.2em;
+        margin-bottom: 0.5em;
+    }
+
+    div.form-group>select {
+        margin-top: 1em;
+        background-color: #3d80f5;
+        position: relative;
+        font-family: Arial;
+        padding: 8px 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        color: white;
     }
 </style>
 
@@ -131,7 +179,7 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
                             <td>'.$product_name.'</td>
                             <td>'.$row['product_color'].'</td>
                             <td>'.$row['product_amount'].'</td>
-                            <td> <a href="delete_item.php?id='. $row['id'] .'">Xoá </a>
+                            <td> <a href="utils/delete_item.php?id='. $row['id'] .'">Xoá </a>
                             </tr>';
                     }
                 }else {
@@ -143,13 +191,43 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
         <br>
         </table>
     </div>
-    <a href="" ><button type="submit" class="btn btn-primary" style="
-                            margin-top: 30px; 
-                            padding: 5px;
-                            width: 80px;
+    
+    <div id="buy_form">
+        <form action="utils/buy.php" method="POST" id="productForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" name="customer_name" placeholder="Họ và tên" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="customer_address" placeholder="Địa chỉ nhận hàng" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="customer_age" placeholder="Tuổi" />
+                    </div>
+                    <div class="form-group">
+                        <select name="product_type">
+                            <option value="dtdd" selected> Nam </option>
+                            <option value="laptop"> Nữ </option>
+                            <option value="tablet"> Khác </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="customer_phone" placeholder="Số điện thoại nhận hàng" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="customer_other" placeholder="Người nhận hộ (nếu có)" />
+                    </div>
+                    <div class="form-group">
+                        <input type="Submit" name="submit" value="Xác nhận" onclick="alert('Vui lòng không BOMM hàng! A du ô cê?')"/>
+                    </div>
+        </form>
+    </div>
+    <button type="submit" id="buy-btn" class="btn btn-primary" style="
+                            margin-top: 1.7em; 
+                            padding: 0.3em;
+                            width: 4.4em;
                             cursor: pointer;
-                            font-size: 16px;
-                            border-radius: 5px;
+                            font-size: 0.9em;
+                            border-radius: 0.3em;
                             background-color: rgba(52, 50, 168);
                             color: white;
                             border: none;
@@ -157,8 +235,6 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
                             box-shadow: 1px -1px 5px rgba(0, 0, 0, 0.5);
                             margin-bottom: 2em;
                         ">Thanh toán</button>
-    </a>
-
   </div>
 
   <?php
@@ -168,3 +244,17 @@ if( isset($_POST['id']) && isset($_POST['color']) && isset($_COOKIE['user']) && 
 
 </html>
 <script src="https://kit.fontawesome.com/9077907ee5.js" crossorigin="anonymous"></script>
+<script>
+    let buy_btn = document.getElementById('buy-btn');
+    let buy_form = document.getElementById('buy_form')
+
+    buy_btn.addEventListener('click', () => {
+        buy_form.style.display = 'block';
+    });
+
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            buy_form.style.display = 'none';
+        }
+    });
+</script>

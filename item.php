@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    include "header.php";
+    include "menu.php";
+    include "utils/dbconnect.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,12 +119,7 @@
 </style>
 
 <body>
-    <?php
-    session_start();
-    include "header.php";
-    include "menu.php";
-    include "dbconnect.php";
-    ?>
+
     <div style="clear: both"></div>
 
     <?php
@@ -138,7 +140,7 @@
 
             echo '
                 <div class="item-name">
-                <h1>' . $row['product_name'] . ' - Lượt xem: '. $row['product_view']. '</h1>
+                <h1>' . htmlentities($row['product_name']) . ' - Lượt xem: '. $row['product_view']. '</h1>
                 <hr />
                 </div>
                 <div class="item-detail">
@@ -149,12 +151,12 @@
                     <h1>Thông số kỹ thuật</h1>
                     <div class="item-detail-decs-content">
                     <p>Giá: ' . $row['product_price'] . '</p>
-                    <p>Xuất xứ: ' . $row['product_origin'] . '</p>
+                    <p>Xuất xứ: ' . htmlentities($row['product_origin']) . '</p>
                     <p>Chi tiết:</p>
                     <ul>';
             $t = explode(' -', $row['product_description']);
             foreach ($t as $value) {
-                echo "<li>$value</li>";
+                echo "<li>".htmlentities($value)."</li>";
             }
             echo '</ul>
                     </div>

@@ -19,4 +19,11 @@
 - Chức năng `check_user`  
 - Thêm chức năng sửa xoá `product`, `user` và thêm sản phẩm  
 - Thêm một số trường ở bảng `user`  
-- API xoá `product`, `user`
+- API xoá `product`, `user`  
+  
+> `11.04.2020`  
+- Thêm form thanh toán  
+- Thêm một số hiệu ứng  
+- Modify slider  
+- Thay đổi background   
+- Sửa một chút về cấu trúc thư mục  
