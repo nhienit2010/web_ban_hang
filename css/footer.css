@@ -1,0 +1,40 @@
+div.footer {
+    width: 100%;
+    min-height: 8em;
+    margin-top: 1.2em;
+    background-color:#CCC;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+div.footer div.footer-left {
+    width: 50%;
+    padding-top: 2.8em;
+    margin-left: 7.1em;
+    float: left;
+    height: 100%;
+}
+div.footer div.footer-right {
+    width: 30%;
+    margin-left: 9.0em;
+    height: 100%;
+    padding-top: 0.8em;
+    line-height: 1.5em;
+    float: left;
+}
+div.footer-bottom {
+    width:100%;
+    line-height:1.5em;
+    background-color:#CCC;
+    padding-top: 1.0em;
+    padding-bottom:1.0em;
+    height: 100%;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+}
+div.footer-bottom table tr td {
+    width:30%;
+}
+div.footer-bottom a {
+    text-decoration:none;
+    color:#288ad6;
+}
