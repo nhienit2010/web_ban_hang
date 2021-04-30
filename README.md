@@ -3,7 +3,7 @@
   
 > How to deloy local  
 - Clone repo về máy   
-- Copy `folder web_ban_hang` vào trong thư mục `<path_to_xampp>/htdocs/`    
+- Copy toàn bộ file trong `folder web_ban_hang` vào trong thư mục `<path_to_xampp>/htdocs/`    
 - Mở `phpmyadmin` và chạy các câu lệnh trong file `database/kmaphone.sql` để init database  
 - MySQL được cấu hình ở port `3306` (Nếu khác thì sửa trong file `dbconnect.php`)
 
