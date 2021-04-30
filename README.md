@@ -8,22 +8,25 @@
 - MySQL được cấu hình ở port `3306` (Nếu khác thì sửa trong file `dbconnect.php`)
 
 ### `Change log`  
-> `07.04.2020`  
+> `07.04.2021`  
 - Thêm chức năng giở hàng `cart.php`  
 - Sắp xếp `product`  
 - Tính lượt view sản phẩm
 - Hash password 
 
-> `10.04.2020`  
+> `10.04.2021`  
 - Thêm trang `admin.php`  
 - Chức năng `check_user`  
 - Thêm chức năng sửa xoá `product`, `user` và thêm sản phẩm  
 - Thêm một số trường ở bảng `user`  
 - API xoá `product`, `user`  
   
-> `11.04.2020`  
+> `11.04.2021`  
 - Thêm form thanh toán  
 - Thêm một số hiệu ứng  
 - Modify slider  
 - Thay đổi background   
 - Sửa một chút về cấu trúc thư mục  
+  
+> `30.04.2021`  
+- Thêm chức năng view và update profile
